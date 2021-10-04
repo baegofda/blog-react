@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "./Button";
 
 const ToDoItem = ({ item, onComplete, onDelete }) => {
   return (
@@ -7,12 +8,10 @@ const ToDoItem = ({ item, onComplete, onDelete }) => {
       <CheckBox
         type="checkbox"
         defaultChecked={item.isCompleted}
-        onChange={onComplete(item.id)}
+        onChange={() => onComplete(item.id)}
       />
       <Content isCompleted={item.isCompleted}>{item.content}</Content>
-      <button type="button" onClick={onDelete(item.id)}>
-        삭제하기
-      </button>
+      <Button type="button" name="삭제하기" onClick={() => onDelete(item.id)} />
     </Item>
   );
 };
@@ -43,7 +42,8 @@ const Content = styled.p`
   ${({ isCompleted }) =>
     isCompleted &&
     `
-  text-decoration:line-through
+  color: rgba(0, 0, 0, 0.3);
+  text-decoration: line-through;
   `}
 `;
 

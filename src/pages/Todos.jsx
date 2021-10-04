@@ -1,49 +1,59 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import Button from "../components/Button";
 import ToDoItem from "../components/ToDoItem";
 
 const ToDos = () => {
   const inputRef = useRef();
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      content: "hihi",
-      isCompleted: true,
-    },
-  ]);
+  const [inputText, setInputText] = useState("");
+  const [items, setItems] = useState([]);
 
-  const onClick = () => {
+  const onChange = (e) => {
+    setInputText(e.target.value);
+  };
+
+  const onClick = (e) => {
+    e.preventDefault();
     setItems((items) => {
       const item = {
+        id: Date.now(),
         content: inputRef.current.value,
         isCompleted: false,
       };
       const newItems = [...items, item];
       return newItems;
     });
-
-    inputRef.current.value = "";
+    setInputText("");
+    inputRef.current.focus();
   };
 
   const onComplete = (id) => {
-    // setItems((items) => {
-    // 	items.find(item => item.id === id)
-    // })
-    // console.log("sss");
+    setItems((items) =>
+      items.map((item) => {
+        if (item.id === id) {
+          return { ...item, isCompleted: !item.isCompleted };
+        }
+        return item;
+      })
+    );
   };
 
   const onDelete = (id) => {
-    // setItems(items.filter((item) => item.id !== id));
+    setItems((items) => items.filter((item) => item.id !== id));
   };
 
   return (
     <Wrapper>
       <Title>TODO</Title>
       <InputContainer>
-        <Input ref={inputRef} placeholder="추가할 리스트를 입력하여 주세요 !" />
-        <InputButton type="submit" onClick={onClick} alt="리스트 등록">
-          추가하기
-        </InputButton>
+        <Input
+          ref={inputRef}
+          value={inputText}
+          type="text"
+          onChange={onChange}
+          placeholder="추가할 리스트를 입력하여 주세요 !"
+        />
+        <Button type="submit" name="추가하기" onClick={onClick} />
       </InputContainer>
       <ul>
         {items.map((item) => (
@@ -68,16 +78,19 @@ const Title = styled.h1`
   font-weight: 700;
   text-align: center;
 `;
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   display: flex;
   width: 400px;
   height: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 const Input = styled.input`
   margin-right: 5px;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
   flex: 1;
 `;
-const InputButton = styled.button``;
 
 export default ToDos;
