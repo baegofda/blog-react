@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-function Button({ type, name, onClick }) {
+const Button = ({ type, name, onClick }) => {
   return (
     <Btn type={type} onClick={onClick}>
       {name}
     </Btn>
   );
-}
+};
 
 const Btn = styled.button`
   background-color: transparent;
