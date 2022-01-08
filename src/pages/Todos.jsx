@@ -45,7 +45,7 @@ const ToDos = () => {
   return (
     <Wrapper>
       <Title>TODO</Title>
-      <InputContainer>
+      <Form>
         <Input
           ref={inputRef}
           value={inputText}
@@ -54,7 +54,7 @@ const ToDos = () => {
           placeholder="추가할 리스트를 입력하여 주세요 !"
         />
         <Button type="submit" name="추가하기" onClick={onClick} />
-      </InputContainer>
+      </Form>
       <ul>
         {items.map((item) => (
           <ToDoItem
@@ -78,7 +78,7 @@ const Title = styled.h1`
   font-weight: 700;
   text-align: center;
 `;
-const InputContainer = styled.form`
+const Form = styled.form`
   display: flex;
   width: 400px;
   height: 40px;
